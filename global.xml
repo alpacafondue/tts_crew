@@ -1,0 +1,129 @@
+<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->
+<Defaults>
+   <Button colors="#828282|white|#828282" textColor="#000000" fontStyle="Bold" fontSize="16"/>
+   <!-- <ToggleButton class="@HorizontalLayout:@ToggleButton" deselectedBackgroundColor="rgba(0,0,0,0)" selectedBackgroundColor="white" deselectedIconColor="white" onValueChanged="toggleClicked"/> -->
+   <ToggleButton class="@HorizontalLayout:@ToggleButton" deselectedBackgroundColor="rgba(0,0,0,0)" deselectedIconColor="#696969" onValueChanged="toggleClicked"/>
+   <Image preserveAspect="true"/>
+</Defaults>
+
+<Button id="showButtons" onClick="showButtons" width="23" height="25" text="&#x25B2;" fontSize="12" rectAlignment="UpperRight" offsetXY="-414 0"></Button>
+
+<VerticalLayout id="buttons" padding="0 0 0 20" rectAlignment="UpperRight" offsetXY="-250 0" height="150" width="164">
+   <Button id="showGame" onClick="gameClicked" text="Game Setup"></Button>
+   <Button id="showTrick" onClick="trickClicked" text="Trick Counter"></Button>
+   <Button id="showLeader" onClick="leaderClicked" text="Leader Correction"></Button>
+   <ToggleButton id="distress" onValueChanged="distressClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Satellite Distress" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
+</VerticalLayout>
+
+<Panel id="Game" height="400" width="400" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
+    <Text id="taskTitle" position="0 150 0" fontStyle="Bold" fontSize="36" text="Task Count = 0" color="#828282"></Text>
+    <Slider id="taskSlider" position="0 100 0" width="350" minValue="0" maxValue="10" value="0" wholeNumbers="true" onValueChanged="updateSliderValue"/>
+    <HorizontalLayout offsetXY="0 50" height="50" width="350" spacing="10">
+      <ToggleButton id="mod1" icon="mod1"></ToggleButton>
+      <ToggleButton id="mod2" icon="mod2"></ToggleButton>
+      <ToggleButton id="mod3" icon="mod3"></ToggleButton>
+      <ToggleButton id="mod4" icon="mod4"></ToggleButton>
+      <ToggleButton id="mod5" icon="mod5"></ToggleButton>
+    </HorizontalLayout>
+    <HorizontalLayout offsetXY="0 -10" height="50" width="350" spacing="10">
+      <ToggleButton id="moda" icon="moda"></ToggleButton>
+      <ToggleButton id="modb" icon="modb"></ToggleButton>
+      <ToggleButton id="modc" icon="modc"></ToggleButton>
+      <ToggleButton id="modd" icon="modd"></ToggleButton>
+      <ToggleButton id="mode" icon="mode"></ToggleButton>
+    </HorizontalLayout>
+    <HorizontalLayout offsetXY="0 -75" height="50" width="350" spacing="10">
+      <ToggleButton id="taskFlip" onValueChanged="taskFlipClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Flip on Deal?" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
+    </HorizontalLayout>
+    <HorizontalLayout offsetXY="0 -150" height="50" width="350" spacing="10">
+      <Button id="startGame" onClick="startGameClicked" text="Start Game"></Button>
+      <Button id="resetGame" onClick="resetGameClicked" text="Reset Game"></Button>
+    </HorizontalLayout>
+</Panel>
+
+<Panel id="Leader" height="200" width="300" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
+  <Text id="leaderTitle" position="0 75 0" fontStyle="Bold" fontSize="30" text="Leader Correction" color="#828282"></Text>
+  <HorizontalLayout offsetXY="0 25" height="50" width="250" spacing="10">
+    <Dropdown id="newLeader" onValueChanged="dropdownChanged">
+      <Option isOn="1">Select Seat</Option>
+      <Option>White</Option>
+      <Option>Red</Option>
+      <Option>Yellow</Option>
+      <Option>Green</Option>
+      <Option>Blue</Option>
+      <Option>JARVIS</Option>
+    </Dropdown>
+  </HorizontalLayout>
+  <HorizontalLayout offsetXY="0 -50" height="50" width="250" spacing="10">
+      <Button id="leaderCorr" onClick="leaderCorrClicked" text="Confirm"></Button>
+  </HorizontalLayout>
+</Panel>
+
+<Panel id="Trick" height="300" width="400" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
+    <TableLayout cellSpacing="1">
+  <Row class="sectionHeaderRow" preferredHeight="32">
+  	<Cell>
+    <Text color="#828282" textColor="#000000" fontStyle="Bold">Player</Text>
+  	</Cell>
+  	<Cell>
+    <Text color="#828282" textColor="#000000" fontStyle="Bold">Tricks Won</Text>
+  	</Cell>
+  </Row>
+  <Row dontUseTableRowBackground="true" color="white">
+  	<Cell>
+    <Text id="WhitePlayer" fontStyle="Bold" text="White"/>
+  	</Cell>
+  	<Cell>
+    <Text id="WhiteTricks" fontStyle="Bold" text="0"/>
+  	</Cell>
+  </Row>
+  <Row dontUseTableRowBackground="true" color="red">
+  	<Cell>
+    <Text id="RedPlayer" fontStyle="Bold" text="Red"/>
+  	</Cell>
+  	<Cell>
+    <Text id="RedTricks" fontStyle="Bold" text="0"/>
+  	</Cell>
+  </Row>
+  <Row dontUseTableRowBackground="true" color="yellow">
+  	<Cell>
+    <Text id="YellowPlayer" fontStyle="Bold" text="Yellow"/>
+  	</Cell>
+  	<Cell>
+    <Text id="YellowTricks" fontStyle="Bold" text="0"/>
+  	</Cell>
+  </Row>
+  <Row dontUseTableRowBackground="true" color="green">
+  	<Cell>
+    <Text id="GreenPlayer" fontStyle="Bold" text="Green"/>
+  	</Cell>
+  	<Cell>
+    <Text id="GreenTricks" fontStyle="Bold" text="0"/>
+  	</Cell>
+  </Row>
+  <Row dontUseTableRowBackground="true" color="blue">
+  	<Cell>
+    <Text id="BluePlayer" fontStyle="Bold" text="Blue"/>
+  	</Cell>
+  	<Cell>
+    <Text id="BlueTricks" fontStyle="Bold" text="0"/>
+  	</Cell>
+  </Row>
+  <Row dontUseTableRowBackground="true" color="teal">
+  	<Cell>
+    <Text id="JARVISPlayer" fontStyle="Bold" text="JARVIS"/>
+  	</Cell>
+  	<Cell>
+    <Text id="JARVISTricks" fontStyle="Bold" text="0"/>
+  	</Cell>
+  </Row>
+	</TableLayout>
+</Panel>
+
+<VerticalLayout id="buttons2" padding="0 0 0 20" rectAlignment="LowerLeft" offsetXY="450 0" height="60" width="164">
+   <Button id="sortHand2" onClick="sortCardsButton" text="Sort Hand"></Button>
+</VerticalLayout>
+
+<VerticalLayout id="buttons3" padding="0 0 0 20" rectAlignment="LowerRight" offsetXY="-450 0" height="60" width="164">
+   <Button id="resolveTrick2" onClick="resolveClicked" text="Resolve Trick"></Button>
+</VerticalLayout>

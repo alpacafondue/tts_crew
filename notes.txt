@@ -1,0 +1,14 @@
+Discord: Qx8nsbX        Workshop: 2051168756
+Coder: alpacafondue     Steam ID: 397029420
+
+See NB for more. Enable Satellite Distress if scripting seems broken.
+
+Use Game Setup above. The Commander (CIRCLE PIECE) sets up the mission, assigns tasks, and makes first play.
+
+[E6E42B]Communication[-]: Use Comm Token to indicate information.
+
+[E6E42B]Task Cards[-]: Auto resolved. Any task completed when not the trick winner = GAME OVER.
+
+Leader (RING) starts trick. Clockwise order. Click Resolve Trick for next hand.  Game Setup > Reset Game to start over OR reload mod.
+
+[E6E42B]2P (JARVIS) and 3P Variant[-]: Removes [1E87FF]blue suit[-] and single Rocket card.
