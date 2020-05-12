@@ -205,6 +205,21 @@ function onLoad()
             areaLabel(v)
         end
     end
+
+    -- Prevent card stacking
+--[[     for i,v in pairs(deck.getObjects()) do
+        local noob = deck.takeObject(v)
+        noob.setLuaScript("function filterObjectEnter(obj) return false end")
+        deck.putObject(noob)
+    end
+
+    for i,v in pairs(secret_discard.getObjects()) do
+        if v.description == "Playing Card" or v.description == "Reminder" then
+            local noob = secret_discard.takeObject(v)
+            noob.setLuaScript("function filterObjectEnter(obj) return false end")
+            secret_discard.putObject(noob)
+        end
+    end ]]
 end
 
 -- Menu buttons
@@ -754,7 +769,7 @@ function onObjectPickedUp(playerColor, obj)
         local objectsP = getAllObj()
         local problem_count = 0
 
-        local commToken = getObjectFromGUID(colorPosition[cardOwnerP].commGUID)
+        local commToken = getObjectFromGUID(colorPosition[playerColor].commGUID)
         local comm_flip = 0
 
         if commToken then
