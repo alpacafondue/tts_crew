@@ -446,7 +446,8 @@ function startGameClicked(player, value, id)
         gameSetup()
         dealTasks()
         dealCards()
-        Global.UI.setAttribute("Game", "active", "false")
+        -- Global.UI.setAttribute("Game", "active", "false")
+        showForPlayer({panel = "Game", color = player.color})
 
         for i, v in pairs(allfixedColor) do
             if playerCount == 2 and v == "JARVIS" then
@@ -723,11 +724,13 @@ function onObjectPickedUp(playerColor, obj)
     local cardNameP = obj.getName()
     local cardSuitP = string.sub(cardNameP,1,1)
     local cardNumberP = tonumber(string.sub(cardNameP,2,2))
+    -- local problem_count = 0
 
     if (colorPosition[cardOwnerP] or cardOwnerP == "Reminder")
     and string.len(cardNameP) == 2 
     and deck.getQuantity() == 0
-    and (distress == "True" or playerCount == 2) then
+    -- and (distress == "True" or playerCount == 2) then
+    and (distress == "True" or cardOwnerP == "JARVIS") then
         local objectsP = getAllObj()
         -- Color areas
         for i,v in pairs(objectsP.all) do
@@ -746,7 +749,7 @@ function onObjectPickedUp(playerColor, obj)
     elseif (colorPosition[cardOwnerP] or cardOwnerP == "Reminder")
     and string.len(cardNameP) == 2 
     and deck.getQuantity() == 0
-    and playerCount > 2 
+    -- and playerCount > 2
     and distress == "False" then
         local objectsP = getAllObj()
         local problem_count = 0
@@ -825,7 +828,8 @@ function onObjectDrop(playerColor, obj)
     if colorPosition[cardOwnerD]
     and string.len(cardNameD) == 2 
     and deck.getQuantity() == 0
-    and (distress == "True" or playerCount == 2) then
+    -- and (distress == "True" or playerCount == 2) then
+    and (distress == "True" or cardOwnerD == "JARVIS") then
         local objectsD = getAllObj()
         local winningOwner = getWinner(objectsD)
         -- Switching cards with JARVIS
@@ -877,7 +881,7 @@ function onObjectDrop(playerColor, obj)
     elseif colorPosition[cardOwnerD]
     and string.len(cardNameD) == 2 
     and deck.getQuantity() == 0
-    and playerCount > 2 
+    -- and playerCount > 2
     and distress == "False" then
     
         local objectsD = getAllObj()
@@ -896,7 +900,7 @@ function onObjectDrop(playerColor, obj)
         -- Player tried to play a card outside their allowed space
         if not(inPoly(colorPosition[cardOwnerD].polygon, obj) or inTable(objectsD.zone, obj) or inTable(objectsD.hand, obj)) then
             problem_count = problem_count + 1
-            broadcastToColor("You can only place a card within your designated play area!", playerColor)
+            broadcastToColor("You can only place a card within your designated play area! Enable satelitte distress if you want to play elesewhere.", playerColor)
         end
 
         -- Player tried to pass a card without the distress signal flipped
@@ -1140,7 +1144,7 @@ end
 function resetGameClicked(player, value, id)
     local playerColor = player.color
     if not(Player[playerColor].host or Player[playerColor].promoted) then
-        broadcastToColor("Only the host or promoted players can start the game!", playerColor)
+        broadcastToColor("Only the host or promoted players can reset the game!", playerColor)
         goto done
     end
 
@@ -1176,7 +1180,7 @@ function resetGameClicked(player, value, id)
 
         -- Send back to homes
         for i,v in pairs(task.getObjects()) do
-            if string.sub(v.name,1,1)=="Z" then
+            if string.sub(v.name,1,1)=="Z" and v.description == "Task Card" then
                 secret_discard.putObject(task.takeObject(v))
             end
         end
@@ -1204,7 +1208,7 @@ function resetGameClicked(player, value, id)
                 pcs.setDescription("Playing Card")
                 secret_discard.putObject(pcs)
             -- All other playing cards to deck
-            elseif string.len(v.name) == 2 then
+            elseif string.len(v.name) == 2 and colorPosition[v.description] then
                 local pc = middleman.takeObject(v)
                 pc.setDescription("Playing Card")
                 deck.putObject(pc)
