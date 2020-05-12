@@ -754,6 +754,15 @@ function onObjectPickedUp(playerColor, obj)
         local objectsP = getAllObj()
         local problem_count = 0
 
+        local commToken = getObjectFromGUID(colorPosition[cardOwnerP].commGUID)
+        local comm_flip = 0
+
+        if commToken then
+            comm_flip = tonumber(string.format("%.0f",commToken.getRotation().z))
+        else
+            comm_flip = 0
+        end
+
         -- Player tried to get someone else"s card
         if playerColor ~= cardOwnerP and colorPosition[cardOwnerP] then
             problem_count = problem_count + 1
@@ -796,7 +805,7 @@ function onObjectPickedUp(playerColor, obj)
                     v.setColorTint(colorPosition[cardOwnerP].color)
                 end
                 if v.getName() == "Comm Area" and cardOwnerP == v.getDescription() 
-                and (checkCount(objectsP.other, cardOwnerP) == 0 or (inTable(objectsP.other, obj) and checkCount(objectsP.other, cardOwnerP) == 1)) and #objectsP.zone == 0 
+                and (checkCount(objectsP.other, cardOwnerP) == 0 or (inTable(objectsP.other, obj) and checkCount(objectsP.other, cardOwnerP) == 1)) and #objectsP.zone == 0 and comm_flip == 0
                 -- and cardSuitP ~= "A"
                 then
                     v.setColorTint(colorPosition[cardOwnerP].color)
