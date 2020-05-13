@@ -21,7 +21,6 @@ function areaLabel(obj)
         local button = {}
         button.click_function = "nothing"
         button.font_color = {r=30/255, g=30/255, b=30/255}
-        -- button.font_color = stringColorToRGB("White")
         button.height = 0
         button.width = 0
         button.label = obj.getName()
@@ -56,8 +55,6 @@ function onLoad()
     modifiers = getObjectFromGUID("df6ee9")
     secret_discard = getObjectFromGUID("3a9a47")
     task = getObjectFromGUID("4f75e0")
-
-    -- table.sort(modifiers, function(a, b) return a.description < b.description end)
 
     -- Variables
     a4G = "5ba8a2"
@@ -116,7 +113,7 @@ function onLoad()
             commCard = {8.52,1.25,4.92}, commToken = {8.52,1,4.92}, commGUID = "cadec8"
         },
         ["Dealer"] = {polygon = {{3.75,-6.5},{7.5,0},{15.2,0},{7.6,-13.16}},
-            polygonT = {{0,0},{15.2,0},{7.6,-13.16}},areas={"e0f497","6a481a"},
+            polygonT = {{0,0},{20,0},{10,-17.32}},areas={"e0f497","6a481a"},
             color = stringColorToRGB("Black"), rotation = {0,120,0},
             commander = {1.52,1.25,-0.88}, leader = {1.52,1,-0.88}, playCard = {3.9,1.25,-2.25}, 
             commCard = {8.52,1.25,-4.92}, commToken = {8.52,1,-4.92}, commGUID = "cadec8"
@@ -205,21 +202,6 @@ function onLoad()
             areaLabel(v)
         end
     end
-
-    -- Prevent card stacking
---[[     for i,v in pairs(deck.getObjects()) do
-        local noob = deck.takeObject(v)
-        noob.setLuaScript("function filterObjectEnter(obj) return false end")
-        deck.putObject(noob)
-    end
-
-    for i,v in pairs(secret_discard.getObjects()) do
-        if v.description == "Playing Card" or v.description == "Reminder" then
-            local noob = secret_discard.takeObject(v)
-            noob.setLuaScript("function filterObjectEnter(obj) return false end")
-            secret_discard.putObject(noob)
-        end
-    end ]]
 end
 
 -- Menu buttons
@@ -461,7 +443,6 @@ function startGameClicked(player, value, id)
         gameSetup()
         dealTasks()
         dealCards()
-        -- Global.UI.setAttribute("Game", "active", "false")
         showForPlayer({panel = "Game", color = player.color})
 
         for i, v in pairs(allfixedColor) do
@@ -672,7 +653,6 @@ function getAllObj()
             end
         end
     end
-    -- getLeadSuit()
 
     local objects = {
         all = allObjects,
@@ -739,12 +719,10 @@ function onObjectPickedUp(playerColor, obj)
     local cardNameP = obj.getName()
     local cardSuitP = string.sub(cardNameP,1,1)
     local cardNumberP = tonumber(string.sub(cardNameP,2,2))
-    -- local problem_count = 0
 
     if (colorPosition[cardOwnerP] or cardOwnerP == "Reminder")
     and string.len(cardNameP) == 2 
     and deck.getQuantity() == 0
-    -- and (distress == "True" or playerCount == 2) then
     and (distress == "True" or cardOwnerP == "JARVIS") then
         local objectsP = getAllObj()
         -- Color areas
@@ -756,7 +734,6 @@ function onObjectPickedUp(playerColor, obj)
             end
             if v.getName() == "Comm Area" and cardOwnerP == v.getDescription() 
             and (checkCount(objectsP.other, cardOwnerP) == 0 or (inTable(objectsP.other, obj) and checkCount(objectsP.other, cardOwnerP) == 1)) and #objectsP.zone == 0 
-            -- and cardSuitP ~= "A" 
             then
                 v.setColorTint(colorPosition[cardOwnerP].color)
             end
@@ -764,7 +741,6 @@ function onObjectPickedUp(playerColor, obj)
     elseif (colorPosition[cardOwnerP] or cardOwnerP == "Reminder")
     and string.len(cardNameP) == 2 
     and deck.getQuantity() == 0
-    -- and playerCount > 2
     and distress == "False" then
         local objectsP = getAllObj()
         local problem_count = 0
@@ -852,7 +828,6 @@ function onObjectDrop(playerColor, obj)
     if colorPosition[cardOwnerD]
     and string.len(cardNameD) == 2 
     and deck.getQuantity() == 0
-    -- and (distress == "True" or playerCount == 2) then
     and (distress == "True" or cardOwnerD == "JARVIS") then
         local objectsD = getAllObj()
         local winningOwner = getWinner(objectsD)
@@ -905,7 +880,6 @@ function onObjectDrop(playerColor, obj)
     elseif colorPosition[cardOwnerD]
     and string.len(cardNameD) == 2 
     and deck.getQuantity() == 0
-    -- and playerCount > 2
     and distress == "False" then
     
         local objectsD = getAllObj()
@@ -965,7 +939,7 @@ function onObjectDrop(playerColor, obj)
         elseif inTable(Player[cardOwnerD].getHandObjects(), obj) then
             discardReminder(obj, objectsD)
         -- If dropped into zone
-        elseif inTable(objectsD.zone, obj) then --and playerColor == cardOwnerD then
+        elseif inTable(objectsD.zone, obj) then
             obj.setPositionSmooth(colorPosition[cardOwnerD].playCard, false, false)
             obj.setRotationSmooth(colorPosition[cardOwnerD].rotation, false, false)
             obj.setHiddenFrom({})
@@ -974,7 +948,7 @@ function onObjectDrop(playerColor, obj)
                 leadSuit = cardSuitD
             end
         -- If dropped into comm
-        elseif inTable(objectsD.other, obj) then --and playerColor == cardOwnerD then
+        elseif inTable(objectsD.other, obj) then
             obj.setRotationSmooth(colorPosition[cardOwnerD].rotation, false, false)
             obj.setHiddenFrom({})
             -- Reminder card sent when Comm Token hits the card. Physics!!!
@@ -1011,7 +985,6 @@ function onObjectDrop(playerColor, obj)
 end
 
 function onObjectLeaveScriptingZone(zone, obj)
-    -- getStarted()
     local cardOwnerZL = obj.getDescription()
     local cardNameZL = obj.getName()
     local cardSuitZL = string.sub(cardNameZL,1,1)
@@ -1024,7 +997,6 @@ function onObjectLeaveScriptingZone(zone, obj)
     if colorPosition[cardOwnerZL]
     and string.len(cardNameZL) == 2 
     and deck.getQuantity() == 0
-    -- and playerCount > 2 
     then
 
         local objectsZL = getAllObj()
@@ -1118,11 +1090,6 @@ function resolveClicked(player, value, id)
         end
         
         local winningOwner = getWinner(objectsR)
-        
---[[         if player.color ~= winningOwner and distress == "False" and playerCount > 2 then
-            broadcastToAll("Only the next leader (".. Player[winningOwner].steam_name .. ") can click. Enable satellite distress if this is a mistake.")
-            goto done
-        end ]]
         
         local stater = {}
         for i,v in pairs(objectsR.zone) do
