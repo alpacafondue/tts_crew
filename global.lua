@@ -725,6 +725,7 @@ function onObjectPickedUp(playerColor, obj)
     and deck.getQuantity() == 0
     and (distress == "True" or cardOwnerP == "JARVIS") then
         local objectsP = getAllObj()
+        obj.setHiddenFrom(otherColors(playerColor))
         -- Color areas
         for i,v in pairs(objectsP.all) do
             if v.getName() == "Play Area" and cardOwnerP == v.getDescription() 
@@ -835,12 +836,14 @@ function onObjectDrop(playerColor, obj)
         if colorPosition["JARVIS"] and inPoly(colorPosition["JARVIS"].polygon, obj) and playerCount == 2 and playerColor == cardOwnerD then
             obj.setDescription("JARVIS")
             obj.setRotationSmooth(colorPosition["JARVIS"].rotation, false, false)
+            obj.setHiddenFrom({})
             discardReminder(obj, objectsD)
         -- Allow player to pass their own card
         elseif inTable(objectsD.hand, obj) and not(inTable(Player[playerColor].getHandObjects(), obj)) and playerColor == cardOwnerD then
             for i,v in pairs(seatedColors) do
                 if inTable(Player[v].getHandObjects(), obj) and v ~= cardOwnerD then
                     obj.setDescription(v)
+                    obj.setHiddenFrom(otherColors(v))
                     discardReminder(obj, objectsD)
                     break
                 end
@@ -849,10 +852,11 @@ function onObjectDrop(playerColor, obj)
         elseif (inTable(Player[playerColor].getHandObjects(), obj) or inPoly(colorPosition[playerColor].polygon, obj)) and playerColor ~= cardOwnerD then
             obj.setDescription(playerColor)
             discardReminder(obj, objectsD)
-            -- Reveal card on drop
+        -- Drop in zone
         elseif inPoly(zonePolygon, obj) then
             obj.setPositionSmooth(colorPosition[cardOwnerD].playCard, false, false)
             obj.setRotationSmooth(colorPosition[cardOwnerD].rotation, false, false)
+            obj.setHiddenFrom({})
             discardReminderZone(obj, objectsD)
             if leader.getDescription() == cardOwnerD then
                 leadSuit = cardSuitD
@@ -860,8 +864,10 @@ function onObjectDrop(playerColor, obj)
         -- In hand
         elseif inTable(Player[playerColor].getHandObjects(), obj) and playerColor == cardOwnerD then
             discardReminder(obj, objectsD)
-        elseif playerColor == cardOwnerD then
+        -- If dropped into comm
+        elseif playerColor == cardOwnerD or cardOwnerD == "JARVIS" then
             obj.setRotationSmooth(colorPosition[playerColor].rotation, false, false)
+            obj.setHiddenFrom({})
         end
 
         -- Change color back to normal
