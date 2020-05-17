@@ -14,6 +14,7 @@ modifiersDetails = {
 
 distress = "False"
 taskFlip = "False"
+noVariants = "False"
 leaderCorr = "Not Changed"
 
 function areaLabel(obj)
@@ -159,6 +160,23 @@ function onLoad()
         {position={-10.9,2,-2.9}, rotation={0,180,0}},
     }
 
+    jarvisLocationsNV = {
+        {position={-8.2,1,8}, rotation={0,180,180}},
+        {position={-8.1,2,8.1}, rotation={0,180,0}},
+        {position={-8.2,1,3}, rotation={0,180,180}},
+        {position={-8.1,2,3.1}, rotation={0,180,0}},
+        {position={-8.2,1,-3}, rotation={0,180,180}},
+        {position={-8.1,2,-2.9}, rotation={0,180,0}},
+        {position={-8.2,1,-8}, rotation={0,180,180}},
+        {position={-8.1,2,-7.9}, rotation={0,180,0}},
+        {position={-11,1,3}, rotation={0,180,180}},
+        {position={-10.9,2,3.1}, rotation={0,180,0}},
+        {position={-11,1,-3}, rotation={0,180,180}},
+        {position={-10.9,2,-2.9}, rotation={0,180,0}},
+        {position={-14,1,0}, rotation={0,180,180}},
+        {position={-13.9,2,0.1}, rotation={0,180,0}},
+    }
+
     taskLocations = {
         {position={6.71,1,-3.88}, rotation={0,120,0}},
         {position={7.26,1,-5.92}, rotation={0,120,0}},
@@ -256,6 +274,13 @@ function taskFlipClicked(player, value, id)
     end
 end
 
+-- Variant flip
+function noVariantsClicked(player, value, id)
+    if id == "noVariants" then
+        noVariants = value
+    end
+end
+
 -- Satelitte Distress
 function distressClicked(player, value, id)
     if id == "distress" then
@@ -333,7 +358,7 @@ function gameSetup()
         end
     end
     
-    if playerCount > 3 then
+    if playerCount > 3 or noVariants == "True" then
         for i,v in pairs(secret_discard.getObjects()) do
             if v.description == "Playing Card" then
                 deck.putObject(secret_discard.takeObject(v))
@@ -373,7 +398,13 @@ function dealCards()
                 noob.setDescription("JARVIS")
                 jarvis.putObject(noob)
             end
-            if jarvis.getQuantity() == 10 then
+            local jl = 0
+            if noVariants == "True" then
+                jl = 14
+            else
+                jl = 10
+            end
+            if jarvis.getQuantity() == jl then
                 break
             end
         end
@@ -621,7 +652,11 @@ function assignLeader(var)
 end
 
 function dealJ()
-    for i,v in pairs(jarvisLocations) do 
+    local jl = jarvisLocations
+    if noVariants == "True" then
+        jl = jarvisLocationsNV
+    end
+    for i,v in pairs(jl) do 
         jarvis.takeObject(v)
     end
 end
