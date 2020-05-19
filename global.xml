@@ -13,35 +13,7 @@
    <Button id="showTrick" onClick="trickClicked" text="Trick Counter"></Button>
    <Button id="showLeader" onClick="leaderClicked" text="Leader Correction"></Button>
    <ToggleButton id="distress" onValueChanged="distressClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Satellite Distress" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
-   <Button id="showMission" onClick="missionClicked" text="Mission Selector"></Button>
 </VerticalLayout>
-
-<Panel id="Game" height="400" width="400" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
-    <Text id="taskTitle" position="0 150 0" fontStyle="Bold" fontSize="36" text="Task Count = 0" color="#828282"></Text>
-    <Slider id="taskSlider" position="0 100 0" width="350" minValue="0" maxValue="10" value="0" wholeNumbers="true" onValueChanged="updateSliderValue"/>
-    <HorizontalLayout offsetXY="0 50" height="50" width="350" spacing="10">
-      <ToggleButton id="mod1" icon="mod1"></ToggleButton>
-      <ToggleButton id="mod2" icon="mod2"></ToggleButton>
-      <ToggleButton id="mod3" icon="mod3"></ToggleButton>
-      <ToggleButton id="mod4" icon="mod4"></ToggleButton>
-      <ToggleButton id="mod5" icon="mod5"></ToggleButton>
-    </HorizontalLayout>
-    <HorizontalLayout offsetXY="0 -10" height="50" width="350" spacing="10">
-      <ToggleButton id="moda" icon="moda"></ToggleButton>
-      <ToggleButton id="modb" icon="modb"></ToggleButton>
-      <ToggleButton id="modc" icon="modc"></ToggleButton>
-      <ToggleButton id="modd" icon="modd"></ToggleButton>
-      <ToggleButton id="mode" icon="mode"></ToggleButton>
-    </HorizontalLayout>
-    <HorizontalLayout offsetXY="0 -75" height="50" width="350" spacing="10">
-      <ToggleButton id="taskFlip" onValueChanged="taskFlipClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Flip on Deal?" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
-      <ToggleButton id="noVariants" onValueChanged="noVariantsClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Don't Use Variant?" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
-    </HorizontalLayout>
-    <HorizontalLayout offsetXY="0 -150" height="50" width="350" spacing="10">
-      <Button id="startGame" onClick="startGameClicked" text="Start Game"></Button>
-      <Button id="resetGame" onClick="resetGameClicked" text="Reset Game"></Button>
-    </HorizontalLayout>
-</Panel>
 
 <Panel id="Leader" height="200" width="300" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
   <Text id="leaderTitle" position="0 75 0" fontStyle="Bold" fontSize="30" text="Leader Correction" color="#828282"></Text>
@@ -122,14 +94,32 @@
 	</TableLayout>
 </Panel>
 
-<Panel id="Mission" height="200" width="400" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
-    <Text id="missionTitle" position="0 75 0" fontStyle="Bold" fontSize="24" text="Select Mission" color="#828282"></Text>
-    <Slider id="missionSlider" position="0 35 0" width="350" minValue="1" maxValue="50" value="1" wholeNumbers="true" onValueChanged="updateSliderValue"/>
-
-
-    <Text id="selectedMission" position="0 0 0" fontStyle="Bold" fontSize="36" text="1" color="#828282"></Text>
-    <HorizontalLayout offsetXY="0 -50" height="35" width="150" spacing="10">
-      <Button id="startMission" onClick="startGameClicked" text="Start Game"></Button>
+<Panel id="Game" height="600" width="400" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
+    <Text id="selectedMission" position="0 250 0" fontStyle="Bold" fontSize="36" text="Mission = 1" color="#828282"></Text>
+    <Slider id="missionSlider" position="0 215 0" width="350" minValue="1" maxValue="50" value="1" wholeNumbers="true" onValueChanged="updateSliderValue"/>
+    <Text id="taskTitle" position="0 150 0" fontStyle="Bold" fontSize="24" text="Task Count = 1" color="#828282"></Text>
+    <Slider id="taskSlider" position="0 125 0" width="350" minValue="0" maxValue="10" value="1" wholeNumbers="true" onValueChanged="updateSliderValue"/>
+    <HorizontalLayout offsetXY="0 50" height="50" width="350" spacing="10">
+      <ToggleButton id="mod1" icon="mod1"></ToggleButton>
+      <ToggleButton id="mod2" icon="mod2"></ToggleButton>
+      <ToggleButton id="mod3" icon="mod3"></ToggleButton>
+      <ToggleButton id="mod4" icon="mod4"></ToggleButton>
+      <ToggleButton id="mod5" icon="mod5"></ToggleButton>
+    </HorizontalLayout>
+    <HorizontalLayout offsetXY="0 -10" height="50" width="350" spacing="10">
+      <ToggleButton id="moda" icon="moda"></ToggleButton>
+      <ToggleButton id="modb" icon="modb"></ToggleButton>
+      <ToggleButton id="modc" icon="modc"></ToggleButton>
+      <ToggleButton id="modd" icon="modd"></ToggleButton>
+      <ToggleButton id="mode" icon="mode"></ToggleButton>
+    </HorizontalLayout>
+    <HorizontalLayout offsetXY="0 -75" height="50" width="350" spacing="10">
+      <ToggleButton id="taskFlip" onValueChanged="taskFlipClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Flip on Deal?" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
+      <ToggleButton id="noVariants" onValueChanged="noVariantsClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Don't Use Variant?" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
+    </HorizontalLayout>
+    <HorizontalLayout offsetXY="0 -250" height="50" width="350" spacing="10">
+      <Button id="startGame" onClick="startGameClicked" text="Start Game"></Button>
+      <Button id="resetGame" onClick="resetGameClicked" text="Reset Game"></Button>
     </HorizontalLayout>
 </Panel>
 

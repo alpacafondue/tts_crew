@@ -703,13 +703,6 @@ function leaderClicked(player, value, id)
     end
 end
 
--- Open Mission Selector
-function missionClicked(player, value, id)
-    if id == "showMission" then
-        showForPlayer({panel = "Mission", color = player.color})
-    end
-end
-
 function dropdownChanged(player, value, id)
     leaderCorr = value
 end
