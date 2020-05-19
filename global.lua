@@ -12,6 +12,363 @@ modifiersDetails = {
     ["mode"] = {guid = "f34774", selected = "False"},
 }
 
+-- Mission definitions
+missions = {
+	-- comm represents the turn that communications are allowed; 11 = communications interference for entire hand
+	-- fiveP represents whether the 5-player rules apply
+
+	[1] = { 
+		tasks = 1,
+		tiles = nil,
+		comm = 0,
+		special = "",
+		fiveP = false
+	},
+	[2] = { 
+		tasks = 2,
+		tiles = nil,
+		comm = 0,
+		special = "",
+		fiveP = false
+	},
+	[3] = { 
+		tasks = 2,
+		tiles = {mod1=true, mod2=true},
+		comm = 0,
+		special = "",
+		fiveP = false
+	},
+	[4] = { 
+		tasks = 3,
+		tiles = nil,
+		comm = 0,
+		special = "",
+		fiveP = false
+	},
+	[5] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "Ask & assign: Avoid taking any tricks",
+		fiveP = false
+	},
+	[6] = { 
+		tasks = 3,
+		tiles = {moda=true, modb=true},
+		comm = 11,
+		special = "",
+		fiveP = false
+	},
+	[7] = { 
+		tasks = 3,
+		tiles = {mode=true},
+		comm = 0,
+		special = "",
+		fiveP = false
+	},
+	[8] = { 
+		tasks = 3,
+		tiles = {mod1=true, mod2=true, mod3=true},
+		comm = 0,
+		special = "",
+		fiveP = false
+	},
+	[9] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "A non-rocket, 1-card must win a trick",
+		fiveP = false
+	},
+	[10] = { 
+		tasks = 4,
+		tiles = nil,
+		comm = 0,
+		special = "",
+		fiveP = false
+	},	
+	[11] = { 
+		tasks = 4,
+		tiles = {mod1=true},
+		comm = 0,
+		special = "Commander selects 1 crew who cannot communicate",
+		fiveP = false
+	},
+	[12] = { 
+		tasks = 4,
+		tiles = {mode=true},
+		comm = 0,
+		special = "After the 1st trick, each player takes a random card from the player to their right",
+		fiveP = false
+	},
+	[13] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "A trick must be won with each of the rocket cards",
+		fiveP = false
+	},
+	[14] = { 
+		tasks = 4,
+		tiles = {moda=true, modb=true, modc=true},
+		comm = 11,
+		special = "",
+		fiveP = false
+	},
+	[15] = { 
+		tasks = 4,
+		tiles = {mod1=true, mod2=true, mod3=true, mod4=true},
+		comm = 0,
+		special = "",
+		fiveP = false
+	},
+	[16] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "A trick may not be won with any 9-card",
+		fiveP = false
+	},
+	[17] = { 
+		tasks = 2,
+		tiles = nil,
+		comm = 0,
+		special = "A trick may not be won with any 9-card",
+		fiveP = false
+	},
+	[18] = { 
+		tasks = 5,
+		tiles = nil,
+		comm = 2,
+		special = "",
+		fiveP = false
+	},
+	[19] = { 
+		tasks = 5,
+		tiles = {mod1=true},
+		comm = 3,
+		special = "",
+		fiveP = false
+	},
+	[20] = { 
+		tasks = 2,
+		tiles = nil,
+		comm = 0,
+		special = "Assignment: Solo",
+		fiveP = false
+	},	
+	[21] = { 
+		tasks = 5,
+		tiles = {mod1=true, mod2=true},
+		comm = 11,
+		special = "",
+		fiveP = false
+	},
+	[22] = { 
+		tasks = 5,
+		tiles = {moda=true, modb=true, modc=true, modd=true},
+		comm = 0,
+		special = "",
+		fiveP = false
+	},
+	[23] = { 
+		tasks = 5,
+		tiles = {mod1=true, mod2=true, mod3=true, mod4=true, mod5=true},
+		comm = 0,
+		special = "Before selecting tasks, the positions of 2 tiles may be swapped",
+		fiveP = false
+	},
+	[24] = { 
+		tasks = 6,
+		tiles = nil,
+		comm = 0,
+		special = "Assignment: Group",
+		fiveP = false
+	},
+	[25] = { 
+		tasks = 6,
+		tiles = {moda=true, modb=true},
+		comm = 11,
+		special = "",
+		fiveP = false
+	},
+	[26] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "2 non-rocket, 1-cards must win a trick each",
+		fiveP = false
+	},
+	[27] = { 
+		tasks = 3,
+		tiles = nil,
+		comm = 0,
+		special = "Assignment: Solo",
+		fiveP = true
+	},
+	[28] = { 
+		tasks = 6,
+		tiles = {mod1=true, mode=true},
+		comm = 3,
+		special = "",
+		fiveP = true
+	},
+	[29] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 11,
+		special = "At no point may a player have won 2 tricks more than any other player",
+		fiveP = false
+	},
+	[30] = { 
+		tasks = 6,
+		tiles = {moda=true, modb=true, modc=true},
+		comm = 2,
+		special = "",
+		fiveP = true
+	},	
+	[31] = { 
+		tasks = 6,
+		tiles = {mod1=true, mod2=true, mod3=true},
+		comm = 0,
+		special = "",
+		fiveP = true
+	},
+	[32] = { 
+		tasks = 7,
+		tiles = nil,
+		comm = 0,
+		special = "Assignment: Group",
+		fiveP = true
+	},
+	[33] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "Ask & assign: Win exactly 1 trick; trick cannot be won using a rocket card",
+		fiveP = false
+	},
+	[34] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "Commander must win the 1st and last tricks. At no point may any player have won 2 more tricks than any other player",
+		fiveP = false
+	},
+	[35] = { 
+		tasks = 7,
+		tiles = {moda=true, modb=true, modc=true},
+		comm = 0,
+		special = "",
+		fiveP = true
+	},
+	[36] = { 
+		tasks = 7,
+		tiles = {mod1=true, mod2=true},
+		comm = 0,
+		special = "Assignment: Group",
+		fiveP = true
+	},
+	[37] = { 
+		tasks = 4,
+		tiles = nil,
+		comm = 0,
+		special = "Assignment: Solo",
+		fiveP = true
+	},
+	[38] = { 
+		tasks = 8,
+		tiles = nil,
+		comm = 3,
+		special = "",
+		fiveP = true
+	},
+	[39] = { 
+		tasks = 8,
+		tiles = {moda=true, modb=true, modc=true},
+		comm = 11,
+		special = "",
+		fiveP = true
+	},
+	[40] = { 
+		tasks = 8,
+		tiles = {mod1=true, mod2=true, mod3=true},
+		comm = 0,
+		special = "Before selecting tasks, 1 tile may be moved to a task that does not have a tile",
+		fiveP = true
+	},	
+	[41] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "Ask & assign: Win only the 1st and last tricks; these tricks cannot be won using rocket cards",
+		fiveP = false
+	},
+	[42] = { 
+		tasks = 9,
+		tiles = nil,
+		comm = 0,
+		special = "",
+		fiveP = true
+	},
+	[43] = { 
+		tasks = 9,
+		tiles = nil,
+		comm = 0,
+		special = "Assignment: Group",
+		fiveP = true
+	},
+	[44] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "Each rocket card must win a trick in ascending order",
+		fiveP = false
+	},
+	[45] = { 
+		tasks = 9,
+		tiles = {moda=true, modb=true, modc=true},
+		comm = 0,
+		special = "",
+		fiveP = true
+	},
+	[46] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "The player with the red 9 identifies themselves; the player to their left must win every red card",
+		fiveP = false
+	},
+	[47] = { 
+		tasks = 10,
+		tiles = nil,
+		comm = 0,
+		special = "",
+		fiveP = true
+	},
+	[48] = { 
+		tasks = 3,
+		tiles = {mode=true},
+		comm = 0,
+		special = "The omega task must be completed on the final trick",
+		fiveP = true
+	},
+	[49] = { 
+		tasks = 10,
+		tiles = {moda=true, modb=true, modc=true},
+		comm = 0,
+		special = "",
+		fiveP = true
+	},
+	[50] = { 
+		tasks = 0,
+		tiles = nil,
+		comm = 0,
+		special = "1 player must win the first 4 tricks, another must win the final trick, and the others must win the rest of the tricks. Decide roles as a group before play begins",
+		fiveP = false
+	}	
+}
+
 distress = "False"
 taskFlip = "False"
 noVariants = "False"
@@ -313,6 +670,23 @@ function updateSliderValue(player, value, id)
         Global.UI.setAttribute("taskSlider", "value", value)
         Global.UI.setAttribute("taskTitle", "text", "Task Count = " .. value)
     end
+    if id == "missionSlider" then
+        Global.UI.setAttribute("selectedMission", "text", value)
+        local missionDetails = missions[tonumber(value)]
+
+        updateSliderValue(player, missionDetails.tasks, "taskSlider")
+
+        for k,v in pairs(modifiersDetails) do
+            Global.UI.setAttribute(k, "isOn", false)
+            modifiersDetails[k].selected = "False"
+        end
+        if missionDetails.tiles then
+            for k,v in pairs(missionDetails.tiles) do
+                toggleClicked(player, "True", k)
+                Global.UI.setAttribute(k, "isOn", true)
+            end
+        end
+    end
 end
 
 -- Open Trick Counter
@@ -329,9 +703,17 @@ function leaderClicked(player, value, id)
     end
 end
 
+-- Open Mission Selector
+function missionClicked(player, value, id)
+    if id == "showMission" then
+        showForPlayer({panel = "Mission", color = player.color})
+    end
+end
+
 function dropdownChanged(player, value, id)
     leaderCorr = value
 end
+
 -- Fix Leader
 function leaderCorrClicked(player, value, id)
     Global.UI.setAttribute("newLeader","value","Select Seat")

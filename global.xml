@@ -13,6 +13,7 @@
    <Button id="showTrick" onClick="trickClicked" text="Trick Counter"></Button>
    <Button id="showLeader" onClick="leaderClicked" text="Leader Correction"></Button>
    <ToggleButton id="distress" onValueChanged="distressClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Satellite Distress" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
+   <Button id="showMission" onClick="missionClicked" text="Mission Selector"></Button>
 </VerticalLayout>
 
 <Panel id="Game" height="400" width="400" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
@@ -119,6 +120,17 @@
   	</Cell>
   </Row>
 	</TableLayout>
+</Panel>
+
+<Panel id="Mission" height="200" width="400" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
+    <Text id="missionTitle" position="0 75 0" fontStyle="Bold" fontSize="24" text="Select Mission" color="#828282"></Text>
+    <Slider id="missionSlider" position="0 35 0" width="350" minValue="1" maxValue="50" value="1" wholeNumbers="true" onValueChanged="updateSliderValue"/>
+
+
+    <Text id="selectedMission" position="0 0 0" fontStyle="Bold" fontSize="36" text="1" color="#828282"></Text>
+    <HorizontalLayout offsetXY="0 -50" height="35" width="150" spacing="10">
+      <Button id="startMission" onClick="startGameClicked" text="Start Game"></Button>
+    </HorizontalLayout>
 </Panel>
 
 <VerticalLayout id="buttons2" padding="0 0 0 20" rectAlignment="LowerLeft" offsetXY="450 0" height="60" width="164">
