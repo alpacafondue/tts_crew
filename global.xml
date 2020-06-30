@@ -17,7 +17,7 @@
 
 <Panel id="Game" height="400" width="400" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
     <Text id="taskTitle" position="0 150 0" fontStyle="Bold" fontSize="36" text="Task Count = 0" color="#828282"></Text>
-    <Slider id="taskSlider" position="0 100 0" width="350" minValue="0" maxValue="10" value="0" wholeNumbers="true" onValueChanged="updateSliderValue"/>
+    <Slider id="taskSlider" position="0 100 0" width="350" minValue="0" maxValue="22" value="0" wholeNumbers="true" onValueChanged="updateSliderValue"/>
     <HorizontalLayout offsetXY="0 50" height="50" width="350" spacing="10">
       <ToggleButton id="mod1" icon="mod1"></ToggleButton>
       <ToggleButton id="mod2" icon="mod2"></ToggleButton>
