@@ -188,6 +188,20 @@ function onLoad()
         {position={9.86,1,-7.42}, rotation={0,120,0}},
         {position={11.36,1,-4.83}, rotation={0,120,0}},
         {position={12.86,1,-2.23}, rotation={0,120,0}},
+        
+        {position={8.01,1,-4.63}, rotation={0,120,0}},
+        {position={8.56,1,-6.67}, rotation={0,120,0}},
+        {position={10.06,1,-4.08}, rotation={0,120,0}},
+        {position={9.11,1,-8.72}, rotation={0,120,0}},
+        {position={10.61,1,-6.12}, rotation={0,120,0}},
+        {position={12.11,1,-3.53}, rotation={0,120,0}},
+
+        {position={5.96,1,-5.18}, rotation={0,120,0}},
+        {position={7.46,1,-2.58}, rotation={0,120,0}},
+        {position={6.51,1,-7.22}, rotation={0,120,0}},
+        {position={9.51,1,-2.03}, rotation={0,120,0}},
+        {position={7.06,1,-9.27}, rotation={0,120,0}},
+        {position={11.56,1,-1.48}, rotation={0,120,0}},
     }
 
     modifierLocations = {
