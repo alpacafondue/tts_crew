@@ -35,6 +35,7 @@
     <HorizontalLayout offsetXY="0 -75" height="50" width="350" spacing="10">
       <ToggleButton id="taskFlip" onValueChanged="taskFlipClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Flip on Deal?" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
       <ToggleButton id="noVariants" onValueChanged="noVariantsClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Don't Use Variant?" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
+      <ToggleButton id="jarvis3" onValueChanged="jarvis3Clicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Jarvis 3P?" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
     </HorizontalLayout>
     <HorizontalLayout offsetXY="0 -150" height="50" width="350" spacing="10">
       <Button id="startGame" onClick="startGameClicked" text="Start Game"></Button>

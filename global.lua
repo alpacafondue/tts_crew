@@ -15,6 +15,7 @@ modifiersDetails = {
 distress = "False"
 taskFlip = "False"
 noVariants = "False"
+jarvis3 = "False"
 leaderCorr = "Not Changed"
 
 function areaLabel(obj)
@@ -58,9 +59,9 @@ function onLoad()
     task = getObjectFromGUID("4f75e0")
 
     -- Variables
-    a4G = "5ba8a2"
-    commanderG = "ff1c7c"
-    leaderG = "0e1e99"
+    -- a4G = "5ba8a2"
+    -- commanderG = "ff1c7c"
+    -- leaderG = "0e1e99"
     leadSuit = "Not Played"
     playerCount = 0
     areaColor = {r=25/255, g=25/255, b=25/255}
@@ -281,6 +282,13 @@ function noVariantsClicked(player, value, id)
     end
 end
 
+-- Jarvis3 flip
+function jarvis3Clicked(player, value, id)
+    if id == "jarvis3" then
+        jarvis3 = value
+    end
+end
+
 -- Satelitte Distress
 function distressClicked(player, value, id)
     if id == "distress" then
@@ -343,12 +351,14 @@ end
 
 function gameSetup()
     local nu = 1
-    if playerCount == 2 then
+    if playerCount == 2 or (playerCount==3 and jarvis3=="True") then
         for i,v in pairs(seatedColors) do
             if Player[v].host then
                 Player[v].changeColor("White")
-            else
+            elseif not Player["Green"].seated then
                 Player[v].changeColor("Green")
+            elseif not Player["Blue"].seated then
+                Player[v].changeColor("Blue")
             end
         end
         
@@ -358,7 +368,7 @@ function gameSetup()
         end
     end
     
-    if playerCount > 3 or noVariants == "True" then
+    if playerCount > 3 or noVariants == "True" or (playerCount==3 and jarvis3=="True") then
         for i,v in pairs(secret_discard.getObjects()) do
             if v.description == "Playing Card" then
                 deck.putObject(secret_discard.takeObject(v))
@@ -369,7 +379,7 @@ function gameSetup()
     end
 
     for v in pairs(colorPosition) do
-        if inTable(seatedColors, v) or (v=="JARVIS" and playerCount == 2) or v=="Dealer" then
+        if inTable(seatedColors, v) or (v=="JARVIS" and (playerCount == 2 or (playerCount==3 and jarvis3=="True"))) or v=="Dealer" then
         else
             colorPosition[v] = nil
         end
@@ -391,7 +401,7 @@ function gameSetup()
 end
 
 function dealCards()
-    if playerCount == 2 and deck.getQuantity() > 0 then
+    if (playerCount == 2 or (playerCount==3 and jarvis3=="True")) and deck.getQuantity() > 0 then
         for i,v in pairs(deck.getObjects()) do
             if v.name ~= "A4" then
                 local noob = deck.takeObject(v)
@@ -399,7 +409,7 @@ function dealCards()
                 jarvis.putObject(noob)
             end
             local jl = 0
-            if noVariants == "True" then
+            if noVariants == "True" and playerCount == 2 then
                 jl = 14
             else
                 jl = 10
@@ -409,7 +419,7 @@ function dealCards()
             end
         end
 
-        broadcastToAll("You are in 2 Player mode. Manually control JARVIS and trick resolution.")
+        broadcastToAll("You are in JARVIS Player mode. Manually control JARVIS and trick resolution.")
     end
 
     while(deck.getQuantity()>0) do
@@ -421,7 +431,7 @@ function dealCards()
             Wait.time(getTopCard, 1)
             Wait.time(assignCommander, 1)
             Wait.time(function() assignLeader(getTopCard()) end, 1)
-            if playerCount == 2 then
+            if playerCount == 2 or (playerCount==3 and jarvis3=="True") then
                 Wait.time(dealJ, 1)
             end
         end
@@ -461,7 +471,7 @@ function startGameClicked(player, value, id)
         goto done
     end
 
-    if playerCount > 2 then
+    if playerCount > 2 and not(playerCount==3 and jarvis3=="True") then
         for i,v in pairs(seatedColors) do
             if not(inTable(fixedColor, v)) then
                 broadcastToAll("Player in wrong colored seat!")
@@ -477,12 +487,24 @@ function startGameClicked(player, value, id)
         showForPlayer({panel = "Game", color = player.color})
 
         for i, v in pairs(allfixedColor) do
-            if playerCount == 2 and v == "JARVIS" then
+            if (playerCount == 2 or (playerCount==3 and jarvis3=="True")) and v == "JARVIS" then
                 Global.UI.setAttribute("JARVISPlayer", "text", "JARVIS")
             elseif colorPosition[v] then
                 Global.UI.setAttribute(v.."Player", "text", Player[v].steam_name)
             else
                 Global.UI.setAttribute(v.."Player", "text", "EMPTY")
+            end
+        end
+
+        local cardCounts = {}
+        for i,v in pairs(getAllObjects()) do
+            if colorPosition[v.getDescription()] and string.len(v.getName()) == 2 then
+                if cardCounts[v.getName()] == nil then
+                    cardCounts[v.getName()] = true
+                else
+                    broadcastToAll("There seems to be an issue with card "..v.getName().."!", "Red")
+                    goto done
+                end
             end
         end
     elseif (Player[playerColor].host or Player[playerColor].promoted) and deck.getQuantity() == 0 then
@@ -604,7 +626,13 @@ function sortCardsButton(player, value, id)
 end
 
 function getTopCard()
-    local a4 = getObjectFromGUID(a4G)
+    local a4 = nil
+    for i,v in pairs(getAllObjects()) do
+        if v.getName()=="A4" then
+            a4 = v
+        end
+    end
+    -- getObjectFromGUID(a4G)
     local a4_holder = a4.getDescription()
     return a4_holder
 end
@@ -617,19 +645,45 @@ function assignCommander()
     local commanderRotation = colorPosition[a4_holder].rotation
     
     -- Commander Properties
-    commander = secret_discard.takeObject({guid=commanderG})
-    commander.setDescription(a4_holder)
-    commander.setPositionSmooth(commanderPosition, false, false)
-    commander.setRotationSmooth(commanderRotation, false, false)
-    commander.setLock(true)
-    commander.setColorTint(commanderColor)
+    commander = nil
+    for i,v in pairs(secret_discard.getObjects()) do
+        if v.name == "Commander" then
+            commander = secret_discard.takeObject({guid=v.guid})
+        end
+    end
+    Wait.condition(
+        function()
+            commander.setDescription(a4_holder);
+            commander.setPositionSmooth(commanderPosition, false, false);
+            commander.setRotationSmooth(commanderRotation, false, false);
+            commander.setLock(true);
+            commander.setColorTint(commanderColor);
+        end,
+        function()
+            return not commander.spawning
+        end
+    )
+    
 
     --Broadcast who the Commander is
     broadcastToAll(Player[a4_holder].steam_name .. " is the commander!")
 end
 
 function assignLeader(var)
-    leader = getObjectFromGUID(leaderG) or secret_discard.takeObject({guid=leaderG})
+    leader = nil
+    local leaderOut = nil
+    local leaderStart = nil
+    for i,v in pairs(getAllObjects()) do
+        if v.getName()=="Leader" then
+            leaderOut = v
+        end
+    end
+    for i,v in pairs(secret_discard.getObjects()) do
+        if v.name == "Leader" then
+            leaderStart = secret_discard.takeObject({guid=v.guid})
+        end
+    end
+    leader = leaderOut or leaderStart
     -- Leader Variables
     local leaderColor = colorPosition[var].color
     local leaderPosition = colorPosition[var].leader
@@ -637,11 +691,18 @@ function assignLeader(var)
     leadSuit = "Not Played"
     
     -- Leader Properties
-    leader.setDescription(var)
-    leader.setPositionSmooth(leaderPosition, false, false)
-    leader.setRotationSmooth(leaderRotation, false, false)
-    leader.setLock(true)
-    leader.setColorTint(leaderColor)
+    Wait.condition(
+        function()
+            leader.setDescription(var);
+            leader.setPositionSmooth(leaderPosition, false, false);
+            leader.setRotationSmooth(leaderRotation, false, false);
+            leader.setLock(true);
+            leader.setColorTint(leaderColor);
+        end,
+        function()
+            return not leader.spawning
+        end
+    )
 
     -- Broadcast who the Leader is and change turn
     if var == "JARVIS" then 
@@ -653,7 +714,7 @@ end
 
 function dealJ()
     local jl = jarvisLocations
-    if noVariants == "True" then
+    if noVariants == "True" and playerCount==2 then
         jl = jarvisLocationsNV
     end
     for i,v in pairs(jl) do 
@@ -847,7 +908,7 @@ function onObjectPickedUp(playerColor, obj)
                 if playerColor == v.getDescription() and v.getName():find("Area") then
                     v.highlightOn(colorPosition[playerColor].color,2)
                 end
-                if playerCount == 2 and playerColor == commander.getDescription() and cardNameP ~= "Comm Token" and v.getDescription() == "JARVIS" and v.getName():find("Area") then
+                if (playerCount == 2 or (playerCount==3 and jarvis3=="True")) and playerColor == commander.getDescription() and cardNameP ~= "Comm Token" and v.getDescription() == "JARVIS" and v.getName():find("Area") then
                     v.highlightOn(colorPosition["JARVIS"].color,2)
                 end
             end
@@ -868,7 +929,7 @@ function onObjectDrop(playerColor, obj)
         local objectsD = getAllObj()
         local winningOwner = getWinner(objectsD)
         -- Switching cards with JARVIS
-        if colorPosition["JARVIS"] and inPoly(colorPosition["JARVIS"].polygon, obj) and playerCount == 2 and playerColor == cardOwnerD then
+        if colorPosition["JARVIS"] and inPoly(colorPosition["JARVIS"].polygon, obj) and (playerCount == 2 or (playerCount==3 and jarvis3=="True")) and playerColor == cardOwnerD then
             obj.setDescription("JARVIS")
             obj.setRotationSmooth(colorPosition["JARVIS"].rotation, false, false)
             obj.setHiddenFrom({})
@@ -1109,7 +1170,7 @@ function resolveClicked(player, value, id)
         local zoneCount = #objectsR.zone
         
         -- Check cards have been played
-        if (zoneCount ~= playerCount and playerCount > 2) or (zoneCount ~= playerCount + 1 and playerCount == 2) then
+        if (zoneCount ~= playerCount and playerCount > 2 and not(playerCount==3 and jarvis3=="True")) or (zoneCount ~= playerCount + 1 and (playerCount == 2 or (playerCount==3 and jarvis3=="True"))) then
             broadcastToAll("Someone has not played or an extra card is present")
             goto done
         end
@@ -1225,25 +1286,63 @@ function resetGameClicked(player, value, id)
         for i,v in pairs(middleman.getObjects()) do
             -- Reminders and blue tasks to secret discard
             if v.description=="Reminder" or (string.sub(v.name,1,1)=="Z" and v.description=="Task Card") then
-                secret_discard.putObject(middleman.takeObject(v))
+                local cc = middleman.takeObject(v)
+                Wait.condition(
+                    function()
+                        secret_discard.putObject(cc)
+                    end,
+                    function()
+                        return not cc.spawning
+                    end
+                )
             -- Other tasks go back to tasks
             elseif v.description=="Task Card" then
-                task.putObject(middleman.takeObject(v))
+                local cc = middleman.takeObject(v)
+                Wait.condition(
+                    function()
+                        task.putObject(cc)
+                    end,
+                    function()
+                        return not cc.spawning
+                    end
+                )
+                -- task.putObject(middleman.takeObject(v))
             -- Commander and Leader to secret discard
             elseif v.name=="Commander" or v.name=="Leader" then
                 local cl = middleman.takeObject(v)
-                cl.setDescription("")
-                secret_discard.putObject(cl)
+                Wait.condition(
+                    function()
+                        cl.setDescription("");
+                        secret_discard.putObject(cl);
+                    end,
+                    function()
+                        return not cl.spawning
+                    end
+                )
             -- Blue playing cards and A1 rocket to secret discard
             elseif string.sub(v.name,1,1)=="Z" or v.name=="A1" then
                 local pcs = middleman.takeObject(v)
-                pcs.setDescription("Playing Card")
-                secret_discard.putObject(pcs)
+                Wait.condition(
+                    function()
+                        pcs.setDescription("Playing Card");
+                        secret_discard.putObject(pcs);
+                    end,
+                    function()
+                        return not pcs.spawning
+                    end
+                )
             -- All other playing cards to deck
             elseif string.len(v.name) == 2 and colorPosition[v.description] then
                 local pc = middleman.takeObject(v)
-                pc.setDescription("Playing Card")
-                deck.putObject(pc)
+                Wait.condition(
+                    function()
+                        pc.setDescription("Playing Card");
+                        deck.putObject(pc);
+                    end,
+                    function()
+                        return not pc.spawning
+                    end
+                )
             end
         end
         onLoad()
