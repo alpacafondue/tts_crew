@@ -351,7 +351,22 @@ end
 
 function gameSetup()
     local nu = 1
-    if playerCount == 2 or (playerCount==3 and jarvis3=="True") then
+    if playerCount == 2 then
+        for i,v in pairs(seatedColors) do
+            if Player[v].host then
+                Player[v].changeColor("White")
+            else
+                Player[v].changeColor("Green")
+            end
+        end
+        
+        seatedColors = getSeatedPlayers()
+        for j,k in pairs(colorPosition["JARVIS"].areas) do
+            getObjectFromGUID(k).setDescription("JARVIS")
+        end
+    end
+
+    if playerCount==3 and jarvis3=="True" then
         for i,v in pairs(seatedColors) do
             if Player[v].host then
                 Player[v].changeColor("White")
