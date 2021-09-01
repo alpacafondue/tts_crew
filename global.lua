@@ -135,6 +135,17 @@ function onLoad()
         Global.UI.setAttribute(v.."Player", "text", v)
     end
 
+    -- Reset discard display
+    for num = 1,9 do
+        if num <= 4 then
+            Global.UI.setAttribute("A"..num.."Discard", "color", "#cccccc")
+        end
+        Global.UI.setAttribute("Z"..num.."Discard", "color", "blue")
+        Global.UI.setAttribute("Y"..num.."Discard", "color", "yellow")
+        Global.UI.setAttribute("G"..num.."Discard", "color", "green")
+        Global.UI.setAttribute("P"..num.."Discard", "color", "pink")
+    end
+
     -- Make sure areas renamed
     for v in pairs(colorPosition) do
         if inTable(fixedColor, v) or v == "Dealer" then
