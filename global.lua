@@ -16,6 +16,7 @@ distress = "False"
 taskFlip = "False"
 noVariants = "False"
 jarvis3 = "False"
+publicDiscard = "False"
 leaderCorr = "Not Changed"
 
 function areaLabel(obj)
@@ -136,6 +137,7 @@ function onLoad()
     end
 
     -- Reset discard display
+    Global.UI.hide("showDiscards")
     for num = 1,9 do
         if num <= 4 then
             Global.UI.setAttribute("A"..num.."Discard", "color", "#cccccc")
@@ -297,6 +299,13 @@ end
 function jarvis3Clicked(player, value, id)
     if id == "jarvis3" then
         jarvis3 = value
+    end
+end
+
+-- PublicDiscard flip
+function publicDiscardClicked(player, value, id)
+    if id == "publicDiscard" then
+        publicDiscard = value
     end
 end
 
@@ -523,6 +532,16 @@ function startGameClicked(player, value, id)
         dealTasks()
         dealCards()
         showForPlayer({panel = "Game", color = player.color})
+
+        if publicDiscard == "True" then
+            Global.UI.show("showDiscards")
+        else
+            Global.UI.hide("showDiscards")
+            -- Hide any open Discards panels
+            shown["Discard"] = false
+            Global.UI.setAttribute("Discard", "active", "false")
+            Global.UI.setAttribute("Discard", "visibility", "|")
+        end
 
         for i, v in pairs(allfixedColor) do
             if (playerCount == 2 or (playerCount==3 and jarvis3=="True")) and v == "JARVIS" then
