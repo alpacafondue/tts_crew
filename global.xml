@@ -11,6 +11,7 @@
 <VerticalLayout id="buttons" padding="0 0 0 20" rectAlignment="UpperRight" offsetXY="-250 0" height="150" width="164">
    <Button id="showGame" onClick="gameClicked" text="Game Setup"></Button>
    <Button id="showTrick" onClick="trickClicked" text="Trick Counter"></Button>
+   <Button id="showDiscards" onClick="discardClicked" text="Discards Display"></Button>
    <Button id="showLeader" onClick="leaderClicked" text="Leader Correction"></Button>
    <ToggleButton id="distress" onValueChanged="distressClicked" textColor="#000000" fontStyle="Bold" fontSize="16" text="Satellite Distress" deselectedBackgroundColor="#828282" selectedBackgroundColor="white"></ToggleButton>
 </VerticalLayout>
@@ -118,6 +119,71 @@
   	<Cell>
     <Text id="JARVISTricks" fontStyle="Bold" text="0"/>
   	</Cell>
+  </Row>
+	</TableLayout>
+</Panel>
+
+<Panel id="Discard" height="250" width="50" color="#000000F0" allowDragging="true" returnToOriginalPositionWhenReleased="false" showAnimation="FadeIn" hideAnimation="FadeOut" animationDuration="1" active="false">
+    <TableLayout cellSpacing="1">
+  <Row>
+  	<Cell><Text id="A1Discard" fontStyle="Bold" text="1" color="#cccccc"/></Cell>
+  	<Cell><Text id="A2Discard" fontStyle="Bold" text="2" color="#cccccc"/></Cell>
+  	<Cell><Text id="A3Discard" fontStyle="Bold" text="3" color="#cccccc"/></Cell>
+  	<Cell><Text id="A4Discard" fontStyle="Bold" text="4" color="#cccccc"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z1Discard" fontStyle="Bold" text="1" color="blue"/></Cell>
+  	<Cell><Text id="Y1Discard" fontStyle="Bold" text="1" color="yellow"/></Cell>
+  	<Cell><Text id="G1Discard" fontStyle="Bold" text="1" color="green"/></Cell>
+  	<Cell><Text id="P1Discard" fontStyle="Bold" text="1" color="pink"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z2Discard" fontStyle="Bold" text="2" color="blue"/></Cell>
+  	<Cell><Text id="Y2Discard" fontStyle="Bold" text="2" color="yellow"/></Cell>
+  	<Cell><Text id="G2Discard" fontStyle="Bold" text="2" color="green"/></Cell>
+  	<Cell><Text id="P2Discard" fontStyle="Bold" text="2" color="pink"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z3Discard" fontStyle="Bold" text="3" color="blue"/></Cell>
+  	<Cell><Text id="Y3Discard" fontStyle="Bold" text="3" color="yellow"/></Cell>
+  	<Cell><Text id="G3Discard" fontStyle="Bold" text="3" color="green"/></Cell>
+  	<Cell><Text id="P3Discard" fontStyle="Bold" text="3" color="pink"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z4Discard" fontStyle="Bold" text="4" color="blue"/></Cell>
+  	<Cell><Text id="Y4Discard" fontStyle="Bold" text="4" color="yellow"/></Cell>
+  	<Cell><Text id="G4Discard" fontStyle="Bold" text="4" color="green"/></Cell>
+  	<Cell><Text id="P4Discard" fontStyle="Bold" text="4" color="pink"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z5Discard" fontStyle="Bold" text="5" color="blue"/></Cell>
+  	<Cell><Text id="Y5Discard" fontStyle="Bold" text="5" color="yellow"/></Cell>
+  	<Cell><Text id="G5Discard" fontStyle="Bold" text="5" color="green"/></Cell>
+  	<Cell><Text id="P5Discard" fontStyle="Bold" text="5" color="pink"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z6Discard" fontStyle="Bold" text="6" color="blue"/></Cell>
+  	<Cell><Text id="Y6Discard" fontStyle="Bold" text="6" color="yellow"/></Cell>
+  	<Cell><Text id="G6Discard" fontStyle="Bold" text="6" color="green"/></Cell>
+  	<Cell><Text id="P6Discard" fontStyle="Bold" text="6" color="pink"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z7Discard" fontStyle="Bold" text="7" color="blue"/></Cell>
+  	<Cell><Text id="Y7Discard" fontStyle="Bold" text="7" color="yellow"/></Cell>
+  	<Cell><Text id="G7Discard" fontStyle="Bold" text="7" color="green"/></Cell>
+  	<Cell><Text id="P7Discard" fontStyle="Bold" text="7" color="pink"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z8Discard" fontStyle="Bold" text="8" color="blue"/></Cell>
+  	<Cell><Text id="Y8Discard" fontStyle="Bold" text="8" color="yellow"/></Cell>
+  	<Cell><Text id="G8Discard" fontStyle="Bold" text="8" color="green"/></Cell>
+  	<Cell><Text id="P8Discard" fontStyle="Bold" text="8" color="pink"/></Cell>
+  </Row>
+  <Row>
+  	<Cell><Text id="Z9Discard" fontStyle="Bold" text="9" color="blue"/></Cell>
+  	<Cell><Text id="Y9Discard" fontStyle="Bold" text="9" color="yellow"/></Cell>
+  	<Cell><Text id="G9Discard" fontStyle="Bold" text="9" color="green"/></Cell>
+  	<Cell><Text id="P9Discard" fontStyle="Bold" text="9" color="pink"/></Cell>
   </Row>
 	</TableLayout>
 </Panel>

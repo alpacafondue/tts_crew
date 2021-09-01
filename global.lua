@@ -337,6 +337,13 @@ function leaderClicked(player, value, id)
     end
 end
 
+-- Open Discards display
+function discardClicked(player, value, id)
+    if id == "showDiscards" then
+        showForPlayer({panel = "Discard", color = player.color})
+    end
+end
+
 function dropdownChanged(player, value, id)
     leaderCorr = value
 end
@@ -1230,6 +1237,8 @@ function resolveClicked(player, value, id)
         
         for i,v in pairs(objectsR.zone) do
             discard.putObject(v)
+            print(v.getName())
+            Global.UI.setAttribute(v.getName().."Discard", "color", "#444444")
         end
         
         -- Reassign leader
