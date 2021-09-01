@@ -1237,7 +1237,6 @@ function resolveClicked(player, value, id)
         
         for i,v in pairs(objectsR.zone) do
             discard.putObject(v)
-            print(v.getName())
             Global.UI.setAttribute(v.getName().."Discard", "color", "#444444")
         end
         
