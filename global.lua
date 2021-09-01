@@ -409,6 +409,11 @@ function gameSetup()
                 task.putObject(secret_discard.takeObject(v))
             end
         end
+    else
+        Global.UI.setAttribute("A1Discard", "color", "#444444")
+        for num = 1,9 do
+            Global.UI.setAttribute("Z"..num.."Discard", "color", "#444444")
+        end
     end
 
     for v in pairs(colorPosition) do
