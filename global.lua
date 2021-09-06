@@ -48,6 +48,12 @@ function onLoad()
     Turns.disable_interactations = false
     Turns.pass_turns = false
 
+    -- Hotkeys
+    addHotkey("Resolve Trick!", function(playerColor, object, pointerPosition, isKeyUp)
+        resolveTrick()
+    end, false)
+
+
     -- Objects
     deck = getObjectFromGUID("a6fb25")
     discard = getObjectFromGUID("dde608")
@@ -1177,7 +1183,7 @@ function getWinner(objects)
     return winningOwner
 end
 
-function resolveClicked(player, value, id)
+function resolveTrick()
     -- Check deck quantity, if 0...
     if deck.getQuantity() == 0 then
         local objectsR = getAllObj()
@@ -1247,6 +1253,10 @@ function resolveClicked(player, value, id)
         end
     end   
     ::done::
+end
+
+function resolveClicked(player, value, id)
+    resolveTrick()
 end
 
 function resetGameClicked(player, value, id)
