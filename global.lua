@@ -1269,10 +1269,24 @@ function resolveClicked(player, value, id)
             v.object.setRotationSmooth({curr_rot.x,curr_rot.y,180}, false, false)
             broadcastToAll("Task completed: " .. v.name)
         end
-        
+
+        function redToGray(cardName)
+            if Global.UI.getAttribute(cardName.."Discard", "color") == "red" then
+                Global.UI.setAttribute(cardName.."Discard", "color", "#444444")
+            end
+        end
+        for num = 1,9 do
+            if num <= 4 then
+                redToGray("A"..num)
+            end
+            redToGray("Z"..num)
+            redToGray("Y"..num)
+            redToGray("G"..num)
+            redToGray("P"..num)
+        end
         for i,v in pairs(objectsR.zone) do
             discard.putObject(v)
-            Global.UI.setAttribute(v.getName().."Discard", "color", "#444444")
+            Global.UI.setAttribute(v.getName().."Discard", "color", "red")
         end
         
         -- Reassign leader
