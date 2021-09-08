@@ -16,6 +16,7 @@ distress = "False"
 taskFlip = "False"
 noVariants = "False"
 jarvis3 = "False"
+publicDiscard = "False"
 leaderCorr = "Not Changed"
 
 function areaLabel(obj)
@@ -133,6 +134,18 @@ function onLoad()
     for v in pairs(colorPosition) do
         Global.UI.setAttribute(v.."Tricks", "text", "0")
         Global.UI.setAttribute(v.."Player", "text", v)
+    end
+
+    -- Reset discard display
+    Global.UI.hide("showDiscards")
+    for num = 1,9 do
+        if num <= 4 then
+            Global.UI.setAttribute("A"..num.."Discard", "color", "#cccccc")
+        end
+        Global.UI.setAttribute("Z"..num.."Discard", "color", "blue")
+        Global.UI.setAttribute("Y"..num.."Discard", "color", "yellow")
+        Global.UI.setAttribute("G"..num.."Discard", "color", "green")
+        Global.UI.setAttribute("P"..num.."Discard", "color", "pink")
     end
 
     -- Make sure areas renamed
@@ -289,6 +302,13 @@ function jarvis3Clicked(player, value, id)
     end
 end
 
+-- PublicDiscard flip
+function publicDiscardClicked(player, value, id)
+    if id == "publicDiscard" then
+        publicDiscard = value
+    end
+end
+
 -- Satelitte Distress
 function distressClicked(player, value, id)
     if id == "distress" then
@@ -334,6 +354,13 @@ end
 function leaderClicked(player, value, id)
     if id == "showLeader" then
         showForPlayer({panel = "Leader", color = player.color})
+    end
+end
+
+-- Open Discards display
+function discardClicked(player, value, id)
+    if id == "showDiscards" then
+        showForPlayer({panel = "Discard", color = player.color})
     end
 end
 
@@ -390,6 +417,11 @@ function gameSetup()
             elseif v.description == "Task Card" then
                 task.putObject(secret_discard.takeObject(v))
             end
+        end
+    else
+        Global.UI.setAttribute("A1Discard", "color", "#444444")
+        for num = 1,9 do
+            Global.UI.setAttribute("Z"..num.."Discard", "color", "#444444")
         end
     end
 
@@ -500,6 +532,16 @@ function startGameClicked(player, value, id)
         dealTasks()
         dealCards()
         showForPlayer({panel = "Game", color = player.color})
+
+        if publicDiscard == "True" then
+            Global.UI.show("showDiscards")
+        else
+            Global.UI.hide("showDiscards")
+            -- Hide any open Discards panels
+            shown["Discard"] = false
+            Global.UI.setAttribute("Discard", "active", "false")
+            Global.UI.setAttribute("Discard", "visibility", "|")
+        end
 
         for i, v in pairs(allfixedColor) do
             if (playerCount == 2 or (playerCount==3 and jarvis3=="True")) and v == "JARVIS" then
@@ -1227,9 +1269,24 @@ function resolveClicked(player, value, id)
             v.object.setRotationSmooth({curr_rot.x,curr_rot.y,180}, false, false)
             broadcastToAll("Task completed: " .. v.name)
         end
-        
+
+        function redToGray(cardName)
+            if Global.UI.getAttribute(cardName.."Discard", "color") == "red" then
+                Global.UI.setAttribute(cardName.."Discard", "color", "#444444")
+            end
+        end
+        for num = 1,9 do
+            if num <= 4 then
+                redToGray("A"..num)
+            end
+            redToGray("Z"..num)
+            redToGray("Y"..num)
+            redToGray("G"..num)
+            redToGray("P"..num)
+        end
         for i,v in pairs(objectsR.zone) do
             discard.putObject(v)
+            Global.UI.setAttribute(v.getName().."Discard", "color", "red")
         end
         
         -- Reassign leader
